@@ -1,0 +1,105 @@
+Step 7 of task 1:
+
+a)/********************MultinomialNB default values, try 1********************/
+
+b)Confusion matrix
+[[104   0   0   0   0]
+ [  0  79   0   0   0]
+ [  1   0  91   0   0]
+ [  0   0   0  97   0]
+ [  0   0   0   0  73]]
+
+c)Precision, recall, and F1-measure
+
+               precision    recall  f1-score   
+
+     business       1.00      0.99      1.00       
+entertainment       1.00      1.00      1.00        
+     politics       0.99      1.00      0.99        
+        sport       1.00      1.00      1.00        
+         tech       1.00      1.00      1.00        
+
+d)
+
+Accuracy:
+0.9977528089887641
+
+Macro average F1:
+0.9979501660260934
+
+Weighted average F1:
+0.9977535727998641
+
+f)Vocabulary size:
+170
+
+
+f)Number of word-tokens in the whole corpus
+445
+
+
+j)
+
+Number of word-tokens of frequency 1 in the whole corpus:
+0
+
+Percentage of word-tokens of frequency 1 in the whole corpus:
+0.0
+
+k)Favorite words count and frequency
+
+Favorite word count in dataset:
+247774
+
+step 8)
+
+a)/********************MultinomialNB default values, try 2********************/
+
+b)Confusion matrix
+
+[[107   0   0   0   0]
+ [  0  66   0   0   0]
+ [  1   0  81   0   0]
+ [  0   0   0 105   0]
+ [  0   1   0   0  84]]
+
+c)Precision, recall, and F1-measure
+
+               precision    recall  f1-score   
+
+     business       1.00      0.99      1.00       
+entertainment       1.00      0.99      0.99        
+     politics       0.99      1.00      0.99        
+        sport       1.00      1.00      1.00       
+         tech       0.99      1.00      0.99        
+
+d)
+Accuracy:
+0.9955056179775281
+
+Macro average F1:
+0.9951555822256708
+
+Weighted average F1:
+0.9955054855834891
+
+f)Vocabulary size:
+337
+
+
+h)Number of word-tokens in the whole corpus:
+445
+
+
+j)
+
+Number of word-tokens of frequency 1 in the whole corpus:
+108
+
+Percentage of word-tokens of frequency 1 in the whole corpus
+0.24269662921348314
+
+k)Favorite words count and log probability:
+
+Favorite word count in dataset:
+178199

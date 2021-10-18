@@ -1,0 +1,64 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import csv
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
+#2)
+file=pd.read_csv("C:\\Users\\manue\\Desktop\\Manuel\\COMP 472\\Assignment 1\\drug200.csv")
+print(file)
+#3)
+x=['drugA', 'drugB', 'drugC', 'drugX', 'drugY']
+y=[0, 0, 0, 0, 0]
+with open("C:\\Users\\manue\\Desktop\\Manuel\\COMP 472\\Assignment 1\\drug200.csv") as f:
+    reader=csv.reader(f)
+    for rows in reader:
+        if(rows[5]=='drugA'):
+            y[0]=y[0]+1
+        if(rows[5]=='drugB'):
+            y[1]=y[1]+1
+        if(rows[5]=='drugC'):
+            y[2]=y[2]+1
+        if(rows[5]=='drugX'):
+            y[3]=y[3]+1
+        if(rows[5]=='drugY'):
+            y[4]=y[4]+1   
+print()
+plt.bar(x, y, color = 'g', width = 0.5)
+plt.xlabel('Drugs')
+plt.ylabel('Instances')
+plt.title('Drug distribution')
+plt.show()
+#4)
+numFile=pd.get_dummies(file)
+ctg=pd.Categorical(numFile)
+numFile.head()
+#5)
+number=LabelEncoder()
+numFile['Age']=number.fit_transform(numFile['Age'])
+numFile['Na_to_K']=number.fit_transform(numFile['Na_to_K'])
+numFile['Sex_F']=number.fit_transform(numFile['Sex_F'])
+numFile['Sex_M']=number.fit_transform(numFile['Sex_M'])
+numFile['BP_HIGH']=number.fit_transform(numFile['BP_HIGH'])
+numFile['BP_LOW']=number.fit_transform(numFile['BP_LOW'])
+numFile['BP_NORMAL']=number.fit_transform(numFile['BP_NORMAL'])
+numFile['Cholesterol_HIGH']=number.fit_transform(numFile['Cholesterol_HIGH'])
+numFile['Cholesterol_NORMAL']=number.fit_transform(numFile['Cholesterol_NORMAL'])
+numFile['Drug_drugA']=number.fit_transform(numFile['Drug_drugA'])
+numFile['Drug_drugB']=number.fit_transform(numFile['Drug_drugB'])
+numFile['Drug_drugC']=number.fit_transform(numFile['Drug_drugC'])
+numFile['Drug_drugX']=number.fit_transform(numFile['Drug_drugX'])
+numFile['Drug_drugY']=number.fit_transform(numFile['Drug_drugY'])
+
+X=["Na_to_K", "Sex_F", "Sex_M", "BP_HIGH", "BP_LOW", "BP_NORMAL", "Cholesterol_HIGH", "Cholesterol_NORMAL", "Drug_drugA", "Drug_drugB", "Drug_drugC", "Drug_drugX", "Drug_drugY"]
+y="Age"
+
+X_train, y_train, X_test, y_test=train_test_split(numFile[X], numFile[y], test_size = 0.2)
+
+#6)
+print()
+print("a)GaussianNB")
+gnb=GaussianNB()

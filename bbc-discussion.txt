@@ -1,0 +1,11 @@
+a)
+We need a quantitive metric that classifies the data based on the classes they are paired with. These text files must be paired with their attributed category in order
+to better analyse and track data in a proper manner that is easy to comprehend for anyone, even those that do not have an in-depth understanding of metrics. It also
+gives a quantitative way to compare how many text file each class has.
+
+b)
+In the case of 8, it is simply a result of the program randomly generating token values at various frequencies every time the code is run. 
+It always changes and , thus, the results always seem to differ with every instance that the dataset is transformed and split.
+
+
+
