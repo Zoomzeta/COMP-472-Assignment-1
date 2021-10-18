@@ -1,4 +1,4 @@
-from matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
@@ -10,7 +10,7 @@ from sklearn.metrics import f1_score
 #Step 2: Plotting
 classes=['business', 'entertainment', 'politics', 'sport', 'tech']
 Instances=[510, 386, 417, 511, 401]
-plt.plot(classes, Instances)
+plt.bar(classes, Instances)
 plt.xlabel("Classes")
 plt.ylabel("Instances")
 plt.title("BBC distribution")
@@ -55,8 +55,9 @@ clf_test.set_params(**parameterB)
 
 #Step 7:
 #a)
+print("*-------------------------------------------------------------------------*")
+print("MultinomialNB default values, try 2")
 
-print("/********************MultinomialNB default values, try 2********************/")
 #b)
 
 print("Confusion matrix")
@@ -76,8 +77,28 @@ print("Macro average F1")
 print(f1_score(y_test, clf_test.predict(X_test), average='macro'))
 print("Weighted average F1")
 print(f1_score(y_test, clf_test.predict(X_test), average='weighted'))
-#f)
 
+#e)
+
+print("Prior probablity of each class:")
+print()
+print("i)Business:")
+print(clf_test.predict_proba(X_test)[:, 0])
+print()
+print("ii)Entertainment:")
+print(clf_test.predict_proba(X_test)[:, 1])
+print()
+print("iii)Politics:")
+print(clf_test.predict_proba(X_test)[:, 2])
+print()
+print("iv)Sport:")
+print(clf_test.predict_proba(X_test)[:, 3])
+print()
+print("v)Tech:")
+print(clf_test.predict_proba(X_test)[:, 4])
+print()
+
+#f)
 vocabulary=0
 default=y_test[0]
 for i in y_test:
@@ -90,26 +111,152 @@ print()
 print("Vocabulary size:")
 print(vocabulary)
 print()
+
+#g)
+print("Number of tokens of each class:")
+print()
+buss_tokens=0
+ent_tokens=0
+pol_tokens=0
+sport_tokens=0
+tech_tokens=0
+
+buss_tokens=sum(X_test[:,0])
+print()
+print("i)Business word tokens:")
+print()
+print(buss_tokens)
+
+ent_tokens=sum(X_test[:,1])
+print()
+print("ii)Entertainment word tokens:")
+print()
+print(ent_tokens)
+
+pol_tokens=sum(X_test[:,2])
+print()
+print("iii)Politics word tokens:")
+print()
+print(pol_tokens)
+
+sports_tokens=sum(X_test[:,3])
+print()
+print("iv)Sport word tokens:")
+print()
+print(sport_tokens)
+
+tech_tokens=sum(X_test[:,4])
+print()
+print("v)Tech word tokens:")
+print()
+print(tech_tokens)
+print()
+
 #h)
 
 total_tokens=0
 for i in y_test:
-    total_tokens=total_tokens+1
+    total_tokens=total_tokens+y_test[i]
 print()
 print("Number of word-tokens in the whole corpus")
 print(total_tokens)
 print()
 
-#j)
-tokens1=0
-for i in y_test:
-    if(y_test[i]==1):
-        tokens1=tokens1+1
+#i)
+print("Numer of word counts of frequency 0 in each class")
+busfreq0=0
+busfreqAll=0
+entfreq0=0
+entfreqAll=0
+polfreq0=0
+polfreqAll=0
+sportsfreq0=0
+sportsfreqAll=0
+techfreq0=0
+techfreqAll=0
+
+print("i)Business:")
+temp=0
+for i in X_test[:,0]:
+    busfreqAll=busfreqAll+1
+    if(i!=0):
+        temp=temp+1
 print()
-print("Number of word-tokens of frequency 1 in the whole corpus")
-print(tokens1)
-print("Percentage of word-tokens of frequency 1 in the whole corpus")
-print(tokens1/total_tokens)
+busfreq0=busfreqAll-temp
+print("Number of word counts of frequency 0 in Business class")
+print(busfreq0)
+print("Percentage of word counts of frequency 0 in Business class")
+print(busfreq0/busfreqAll)
+print()
+
+print("ii)Entertainment:")
+temp=0
+for i in X_test[:,1]:
+    entfreqAll=entfreqAll+1
+    if(i!=0):
+        temp=temp+1
+print()
+entfreq0=busfreqAll-temp
+print("Number of word counts of frequency 0 in Entertainment class")
+print(entfreq0)
+print("Percentage of word counts of frequency 0 in Entertainment class")
+print(entfreq0/entfreqAll)
+print()
+
+print("iii)Politics:")
+temp=0
+for i in X_test[:,2]:
+    polfreqAll=polfreqAll+1
+    if(i!=0):
+        temp=temp+1
+print()
+polfreq0=polfreqAll-temp
+print("Number of word counts of frequency 0 in Politics class")
+print(polfreq0)
+print("Percentage of word counts of frequency 0 in Politics class")
+print(polfreq0/polfreqAll)
+print()
+
+print("iv)Sports:")
+temp=0
+for i in X_test[:,3]:
+    sportsfreqAll=sportsfreqAll+1
+    if(i!=0):
+        temp=temp+1
+print()
+sportsfreq0=sportsfreqAll-temp
+print("Number of word counts of frequency 0 in Sports class")
+print(sportsfreq0)
+print("Percentage of word counts of frequency 0 in Sports class")
+print(sportsfreq0/sportsfreqAll)
+print()
+
+print("v)Tech:")
+temp=0
+for i in X_test[:,4]:
+    techfreqAll=techfreqAll+1
+    if(i!=0):
+        temp=temp+1
+print()
+techfreq0=techfreqAll-temp
+print("Number of word counts of frequency 0 in Entertainment class")
+print(techfreq0)
+print("Percentage of word counts of frequency 0 in Entertainment class")
+print(techfreq0/techfreqAll)
+print()
+
+#j)
+fre1=0
+freAll=0
+for i in y_test:
+    freAll=freAll+1
+    if(y_test[i]==1):
+        fre1=fre1+1
+print()
+print("Number of word counts of frequency 1 in the whole corpus")
+print(fre1)
+print("Percentage of word counts of frequency 1 in the whole corpus")
+print(fre1/freAll)
 print()
 #k)
 
@@ -122,6 +269,6 @@ for i in favwords:
         if(favwords[i]==y_test[j]):
             fwords_count=fwords_count+1
 print()
-print("Favorite word count in count in dataset:")
+print("i)Favorite word count in dataset:")
 print(fwords_count)
 print()

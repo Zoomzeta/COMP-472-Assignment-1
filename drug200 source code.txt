@@ -3,10 +3,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import GaussianNB
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import svm
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import Perceptron
+from sklearn.neural_network import MLPClassifier
+from sklearn import decomposition
+from sklearn import tree
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix
 #2)
 file=pd.read_csv("C:\\Users\\manue\\Desktop\\Manuel\\COMP 472\\Assignment 1\\drug200.csv")
 print(file)
@@ -34,31 +41,42 @@ plt.title('Drug distribution')
 plt.show()
 #4)
 numFile=pd.get_dummies(file)
-ctg=pd.Categorical(numFile)
-numFile.head()
+print(numFile)
+category=pd.Categorical(numFile['Age'])
+
 #5)
-number=LabelEncoder()
-numFile['Age']=number.fit_transform(numFile['Age'])
-numFile['Na_to_K']=number.fit_transform(numFile['Na_to_K'])
-numFile['Sex_F']=number.fit_transform(numFile['Sex_F'])
-numFile['Sex_M']=number.fit_transform(numFile['Sex_M'])
-numFile['BP_HIGH']=number.fit_transform(numFile['BP_HIGH'])
-numFile['BP_LOW']=number.fit_transform(numFile['BP_LOW'])
-numFile['BP_NORMAL']=number.fit_transform(numFile['BP_NORMAL'])
-numFile['Cholesterol_HIGH']=number.fit_transform(numFile['Cholesterol_HIGH'])
-numFile['Cholesterol_NORMAL']=number.fit_transform(numFile['Cholesterol_NORMAL'])
-numFile['Drug_drugA']=number.fit_transform(numFile['Drug_drugA'])
-numFile['Drug_drugB']=number.fit_transform(numFile['Drug_drugB'])
-numFile['Drug_drugC']=number.fit_transform(numFile['Drug_drugC'])
-numFile['Drug_drugX']=number.fit_transform(numFile['Drug_drugX'])
-numFile['Drug_drugY']=number.fit_transform(numFile['Drug_drugY'])
-
-X=["Na_to_K", "Sex_F", "Sex_M", "BP_HIGH", "BP_LOW", "BP_NORMAL", "Cholesterol_HIGH", "Cholesterol_NORMAL", "Drug_drugA", "Drug_drugB", "Drug_drugC", "Drug_drugX", "Drug_drugY"]
-y="Age"
-
-X_train, y_train, X_test, y_test=train_test_split(numFile[X], numFile[y], test_size = 0.2)
+numFile_train, category_train, numFile_test, category_test=train_test_split(numFile, category, test_size=0.20)
 
 #6)
-print()
-print("a)GaussianNB")
+
+#i)GaussianNB
 gnb=GaussianNB()
+gnb.fit(numFile, category)
+#ii)Base-DT
+dtc=DecisionTreeClassifier()
+dtc.fit(numFile, category)
+#iii)Top-DT
+std_slc = StandardScaler()
+pca = decomposition.PCA()
+dec_tree = tree.DecisionTreeClassifier()
+pipe = Pipeline(steps=[('std_slc', std_slc),
+                           ('pca', pca),
+                           ('dec_tree', dec_tree)])
+n_components = list(range(1,X.shape[1]+1,1))
+criterion = ['gini', 'entropy']
+max_depth = [10,12]
+parameters = dict(pca__n_components=n_components,
+                      dec_tree__criterion=criterion,
+                      dec_tree__max_depth=max_depth)
+parameters = dict(pca__n_components=n_components,
+                      dec_tree__criterion=criterion,
+                      dec_tree__max_depth=max_depth) 
+dtc_GS = GridSearchCV(pipe, parameters)
+dtc_GS.fit(X, y)
+#iv)PER
+pct=Perceptron()
+pct.fit(numFile, category)
+#v)Base-MLP
+clf = MLPClassifier(hidden_layer_sizes=(100), activation='logistic', solver='sgd')
+#clf.fit(numFile, category)
+print()
